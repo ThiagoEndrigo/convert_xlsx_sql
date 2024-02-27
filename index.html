@@ -100,7 +100,8 @@
                                     if (value === '' || typeof value === 'undefined') {
                                         return 'NULL';
                                     } else {
-                                        return typeof value === 'string' ? `'${value}'` : value;
+                                        const cleanedValue = typeof value === 'string' ? value.replace(/&nbsp;/g, '').trim() : value;
+                                        return typeof cleanedValue === 'string' ? `'${cleanedValue.replace(/'/g, "''")}'` : `'${cleanedValue}'`;
                                     }
                                 }).join(', ');
                                 return `INSERT INTO ${tableName} (${columns.join(', ')}) VALUES (${values});`;
